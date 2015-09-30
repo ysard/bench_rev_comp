@@ -1,9 +1,13 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.0)
 
 project(bench_rev_comp_cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O2")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/..)
+
+# Boost
+find_package(Boost)
+include_directories($Boost_INCLUDE_DIRS)
 
 include_directories(inc)
 

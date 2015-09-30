@@ -14,6 +14,7 @@
 #include "rev_comp_tab.hpp"
 #include "rev_comp_naive.hpp"
 #include "rev_comp_pol3.hpp"
+#include "rev_comp_bin.hpp"
 
 int main(int argc, char** argv)
 {
@@ -27,6 +28,7 @@ int main(int argc, char** argv)
     bench_list.emplace("hash", std::make_unique<rev_comp_tab>());
     bench_list.emplace("naive", std::make_unique<rev_comp_naive>());
     bench_list.emplace("pol3", std::make_unique<rev_comp_pol3>());
+    bench_list.emplace("bin", std::make_unique<rev_comp_bin>());
 
     /* print algorithme name */
     bool first = true;
