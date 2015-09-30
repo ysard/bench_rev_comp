@@ -38,11 +38,11 @@ def main(args):
                                      formatter_class=argparse.
                                      ArgumentDefaultsHelpFormatter)
     parser.add_argument("-o", "--output", type=str, help="output filename",
-                        required=True)
+                        default="list_of_sequences.csv")
     parser.add_argument("-l", "--min-seq-len", type=unsigned_int,
                         help="minimal sequence length", default=100)
     parser.add_argument("-L", "--max-seq-len", type=unsigned_int,
-                        help="maximal sequence length", default=100000000)
+                        help="maximal sequence length", default=100000)
     parser.add_argument("-m", "--step-seq", type=unsigned_int,
                         help="multiplicator of sequence growing", default=10)
     parser.add_argument("-g", "--min-gc", type=in_interval_0_1,
