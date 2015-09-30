@@ -34,7 +34,9 @@ def isdir(val):
 def main(args):
 
     parser = argparse.ArgumentParser(prog="run",
-                                     description="Run bench_rev_comp")
+                                     description="Run bench_rev_comp",
+                                     formatter_class=argparse.
+                                     ArgumentDefaultsHelpFormatter)
     parser.add_argument("-o", "--output", type=str, help="output prefix",
                         required=True)
     parser.add_argument("-i", "--input", type=str,
@@ -65,7 +67,13 @@ def read_run_store(lang, nb_call, output, seq_file, nb_of_nuc):
     all_data = defaultdict(list)
     with open(seq_file) as csvfile:
         seq_reader = csv.DictReader(csvfile)
+
+        print("Run")
+
         for row in seq_reader:
+
+            print("    len : "+row["length"]+" gc : "+row["gc"])
+
             tmp_dict = run(lang+"/bench", row["seq"], row["gc"], nb_call,
                             nb_of_nuc/len(row["seq"]))
             for k in tmp_dict.keys():
@@ -84,11 +92,14 @@ def run(bin_path, seq, gc, nb_call, nb_repeat):
         result_reader = csv.DictReader(result.stdout)
         for row in result_reader:
             for algo in row.keys():
-                ret[str(len(seq))+"_"+str(gc)+"_"+algo].append(int(row[algo]))
+                ret[str(len(seq))+"-"+str(gc)+"-"+algo].append(int(row[algo]))
 
     return ret
 
 def store(result, output, lang, nb_call):
+
+    print("Store")
+    
     with open(output+"_"+lang+"_raw.csv", "w") as raw, open(
             output+"_resume.csv", "w") as clean:
         raw.write(",".join(["len", "gc", "algo"] + ["res_"+str(i) for i in
@@ -96,7 +107,7 @@ def store(result, output, lang, nb_call):
         clean.write(",".join(["language", "len", "gc", "algo", "mean",
                               "stderror"]) + "\n")
         for len_gc_algo in result:
-            (length, gc, algo) = len_gc_algo.split("_")
+            (length, gc, algo) = len_gc_algo.split("-")
             raw.write(",".join([length, gc, algo] +
                                [str(i) for i in result[len_gc_algo]]) + "\n")
 
@@ -106,6 +117,9 @@ def store(result, output, lang, nb_call):
                                  + "\n")
 
 def generate_graph(output):
+
+    print("Generate graphe")
+    
     pandas.set_option('display.mpl_style', 'default')
     data = pandas.read_csv(output+"_resume.csv")
 
@@ -125,9 +139,7 @@ def generate_graph(output):
                                                       is_algo]['stderror'])))
                 df[algo] = mean
 
-            print(df)
             df.sort_index(inplace=True)
-            print(df)
             graph = df.plot(kind='bar', yerr=errors)
 
             fig = graph.get_figure()

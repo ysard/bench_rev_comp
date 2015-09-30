@@ -2,6 +2,25 @@
 
 bench\_rev\_comp is a project to compare some reverse complement algorithme in some programing language.
 
+## How to run the benchmark
+
+1. Generate data
+
+```
+cd data
+./generate_data -o data.csv
+cd ..
+```
+
+2. Run benchmark
+
+```
+mkdir output
+./run.py -i data/data.csv -o output/test -l ${list_of_language_you_want_bench}
+```
+
+3. Read the result, in output dir you find test_resume.csv with resume result, test test\_${language}\_raw.csv and test\_${language}\_${seq\_size}.png
+
 ## Project structure
 
 * data: content script to generate data set file.
@@ -25,6 +44,10 @@ naive,tab,hash,pol3
 ## Algorithm and implementation
 
 In each language directory we found a algorithm.md file, he associate a short name to a description of algorithme and implementation specificity.
+
+### Algorithm naming
+
+Please don't use this charactere in your algorithm name '-'
 
 ## Contribution
 
