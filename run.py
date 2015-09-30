@@ -38,12 +38,14 @@ def main(args):
     parser.add_argument("-o", "--output", type=str, help="output prefix",
                         required=True)
     parser.add_argument("-i", "--input", type=str,
+                        default="mabite.csv",
                         help="csv file content list of sequence")
     parser.add_argument("-n", "--nb-call", type=unsigned_int,
                         help="Number of repeat run for calculate mean",
                         default=10)
     parser.add_argument("-l", "--list-lang", nargs='+', type=isdir,
-                        required=True, help="List of language you want bench",
+                        default="cpp",
+                        help="List of language you want bench",
                         action='store')
     parser.add_argument("-N", "--nb-of-nuc", type=unsigned_int,
                         help="Each call run on this nucleotide number",
