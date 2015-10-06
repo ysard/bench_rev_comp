@@ -44,10 +44,10 @@ def main(args):
                         help="csv file content list of sequence")
     parser.add_argument("-n", "--nb-call", type=unsigned_int,
                         help="Number of repeat run for calculate mean",
-                        default=2)
+                        default=3)
     parser.add_argument("-l", "--list-lang", nargs='+', type=isdir,
                         default=["cpp"],
-                        help="List of language you want bench",
+                        help="List of languages you want bench",
                         action='store')
     parser.add_argument("-N", "--nb-of-nuc", type=unsigned_int,
                         help="Each call run on this nucleotide number",
