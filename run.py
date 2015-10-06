@@ -38,15 +38,15 @@ def main(args):
                                      formatter_class=argparse.
                                      ArgumentDefaultsHelpFormatter)
     parser.add_argument("-o", "--output", type=str, help="output prefix",
-                        required=True)
+                        default="default_output")
     parser.add_argument("-i", "--input", type=str,
-                        default="mabite.csv",
+                        default="list_of_sequences.csv",
                         help="csv file content list of sequence")
     parser.add_argument("-n", "--nb-call", type=unsigned_int,
                         help="Number of repeat run for calculate mean",
-                        default=10)
+                        default=2)
     parser.add_argument("-l", "--list-lang", nargs='+', type=isdir,
-                        default="cpp",
+                        default=["cpp"],
                         help="List of language you want bench",
                         action='store')
     parser.add_argument("-N", "--nb-of-nuc", type=unsigned_int,
@@ -93,7 +93,9 @@ def run(bin_path, seq, gc, nb_call, nb_repeat):
 
         result_reader = csv.DictReader(result.stdout)
         for row in result_reader:
+            #print("keys:", row.keys())
             for algo in row.keys():
+                #print("seq:",seq, "gc:", gc, "algo:", algo, "row["+ algo +"]:", row[algo])
                 ret[str(len(seq))+"-"+str(gc)+"-"+algo].append(int(row[algo]))
 
     return ret
