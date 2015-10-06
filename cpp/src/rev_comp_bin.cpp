@@ -140,9 +140,6 @@ rev_comp_bin::rev_comp_bin()
 
 string rev_comp_bin::run(string sequence)
 {
-    // Debug:
-    //cout << sequence << endl;
-
     // Time measurement: beginning
     //int seconds1 = time(NULL);
 
@@ -151,7 +148,7 @@ string rev_comp_bin::run(string sequence)
     f_convert = for_each(sequence.begin(), sequence.end(), f_convert);
     // Pointer is more convenient and don't use more memory
     boost::dynamic_bitset<>* encodedSequence = f_convert.getBitset();
-    // Debug:
+    // Displays infos about the encoded sequence:
     //cout << "Number of bits:    " << encodedSequence->size() << endl;
     //cout << "Encoded sequence:  " << *encodedSequence        << endl;
 
@@ -167,11 +164,10 @@ string rev_comp_bin::run(string sequence)
         value =  value << 1;
         value += (*encodedSequence)[i+2];
 
-        // Debug:
+        // Displays the letter currently processed
         /*
         cout << "bitset: "   << bitset<3>(value)
              << "; val: "    << (int)value
-             << "; bool ?: " << (value == 3)
              << endl;
         */
 
@@ -184,8 +180,8 @@ string rev_comp_bin::run(string sequence)
     // Displays the new reversed & complementary sequence
     //cout << sequence << endl;
 
-    /*cout << "Encoding done:   " << seconds3 - seconds1 << endl
-         << "Reversing done:  " << seconds4 - seconds3 << endl;
+    /*cout << "Encoding done in:   " << seconds3 - seconds1 << endl
+         << "Reversing done in:  " << seconds4 - seconds3 << endl;
      */
 
     // Returns reversed sequence
