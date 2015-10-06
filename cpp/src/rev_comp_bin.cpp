@@ -5,21 +5,6 @@ using namespace std;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-LifeGenerator::LifeGenerator():
-    m_basesCharset("ATGC")
-{
-    // Initialises the seed
-    srand(time(NULL));
-}
-
-char LifeGenerator::operator ()()
-{
-    // Returns pseudo random char taken in the charset
-    return m_basesCharset[ rand() % (/*m_basesTab.length()*/4) ];
-}
-
-///////////////////////////////////////////////////////////////////////////////
-
 Convert::Convert(uint64_t const& length):
     m_bitset(boost::dynamic_bitset<>(length*BIN_LENGTH)),
     m_current_pos(length*BIN_LENGTH -1)
@@ -64,57 +49,58 @@ void Convert::operator ()(uint8_t const& base)
      * Other operations have to be ultimately converted into them.
      *
      * ATGC: 001 100 011 110
-     * Les nombres sont stockés en little endian mais sont lus en big endian.
-     * Par conséquent, en cases 0,1,2 on aura la lettre C
-     * en 3,4,5 on aura la lettre G etc.
+     * The numbers are stored in little endian but are read in big endian.
+     * Therefore, on indices 0,1,2 we have the letter C
+     * in 3,4,5 we will have the G etc.
      *
-     * Si on écrit la liste dans un sens 0 => fin,
-     * il faudra la lire dans le sens opposé pour faire le reverse: fin => 0.
-     * Ou l'inverse (écriture: fin => 0; lecture: 0 => fin);
-     * ce que je fais ici.
+     * If we write the list in one direction: 0 => end,
+     * we must read in the opposite direction to do the reverse: end => 0.
+     * Or the inverse (write: end => 0; read: 0 => end);
+     * Which is what i'm doing here.
      *
-     * Donc ex pour la première lettre de ATGC:
-     * sur le bit 3x4-1=11 on doit mettre 0
-     * sur le bit 10       on doit mettre 0
-     * sur le bit 9        on doit mettre 1
-     * Puis on passe à la lettre T, etc.
-     * sur le bit 2: 1
-     * sur le bit 1: 1
-     * sur le bit 0: 0
+     * So, here an example for the first letter of ATGC:
+     * on the bit 3x4-1=11 we have to put 0
+     * on the bit 10       we have to put 0
+     * on the bit 9        we have to put 1
+     * Then we move to the letter T, etc.*
+     * on the bit 2: 1
+     * on the bit 1: 1
+     * on the bit 0: 0
      *
-     *
-     * Si on affiche le résultat le programme nous donne en big endian avec les indices:
+     * If the program displays the result, it will give us big endian with the indices:
      * indices   11  10  9   8   7   6   5   4   3   2   1   0
-     * valeurs   0   0   1                           1   1   0
+     * values    0   0   1                           1   1   0
      *
-     * En réalité en mémoire (little endian):
+     * In fact in memory (little endian):
      * Ob110......001
      *
-     * Pour trouver la chaine complémentaire et faire le reverse en même temps,
-     * il suffit de lire la chaine dans le sens inverse de l'écriture.
+     * 
+     * To find the complementary chain and do the reverse at the same time,
+     * we just read the string in the opposite direction of writing.
      *
-     * Si on parcourt le tableau en mémoire, case par case en partant du début:
+     * If we traverse the table in memory, box by box, starting from the beginning:
      * 011 110 001 100
-     * soit:
+     * that to say:
      * GCAT
      *
      *
-     * Ecrire une lettre en mémoire:
-     * On doit récupérer les bits 1 à 1; Du plus décalé à gauche vers le plus à droite.
-     * Donc pour A: 0b001
-     * bit de poids faible: ((0b001 >> 2) & 1) = 0 à mettre en case 11
-     * bit central:         ((0b001 >> 1) & 1) = 0                  10
-     * bit de poids fort:   ((0b001 >> 0) & 1) = 1                  9
+     * Write a letter in memory:
+     * We must recover the bits 1 by 1; The more shifted left to the far right.
+     * So for A: 0b001
+     * 
+     * least significant bit: ((0b001 >> 2) & 1) = 0 to put in box 11
+     * middle bit :           ((0b001 >> 1) & 1) = 0               10
+     * most significant bit:  ((0b001 >> 0) & 1) = 1               9
      *
-     * Lire une lettre en mémoire à l'envers:
-     * Lettre A:
-     * 000 + case 9
+     * Read a letter in memory in reverse way:
+     * Letter A:
+     * 000 + box 9
      * 001 << 1
-     * 010 + case 10
+     * 010 + box 10
      * 010 << 1
-     * 100 + case 11
+     * 100 + box 11
      * 100
-     * code correspondant à la lettre T.
+     * Which is the code corresponding to the letter T.
      */
 
     uint8_t value = m_mappingADNData[base];
@@ -155,7 +141,7 @@ rev_comp_bin::rev_comp_bin()
 string rev_comp_bin::run(string sequence)
 {
     // Debug:
-    cout << sequence << endl;
+    //cout << sequence << endl;
 
     // Time measurement: beginning
     //int seconds1 = time(NULL);
@@ -196,7 +182,7 @@ string rev_comp_bin::run(string sequence)
     //int seconds4 = time(NULL);
 
     // Displays the new reversed & complementary sequence
-    cout << sequence << endl;
+    //cout << sequence << endl;
 
     /*cout << "Encoding done:   " << seconds3 - seconds1 << endl
          << "Reversing done:  " << seconds4 - seconds3 << endl;

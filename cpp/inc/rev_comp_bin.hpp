@@ -39,20 +39,6 @@ private:
 };
 
 ///////////////////////////////////////////////////////////////////////////////
-/// \brief The LifeGenerator class
-///
-class LifeGenerator
-{
-    /* functor for generating a random DNA sequence */
-public:
-    LifeGenerator();
-    char operator()();
-
-private:
-    std::string  m_basesCharset;
-};
-
-///////////////////////////////////////////////////////////////////////////////
 /// \brief The Convert class
 ///
 class Convert
