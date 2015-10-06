@@ -40,7 +40,7 @@ def main(args):
     parser.add_argument("-o", "--output", type=str, help="output filename",
                         default="list_of_sequences.csv")
     parser.add_argument("-l", "--min-seq-len", type=unsigned_int,
-                        help="minimal sequence length", default=100)
+                        help="minimal sequence length", default=10)
     parser.add_argument("-L", "--max-seq-len", type=unsigned_int,
                         help="maximal sequence length", default=100000)
     parser.add_argument("-m", "--step-seq", type=unsigned_int,
