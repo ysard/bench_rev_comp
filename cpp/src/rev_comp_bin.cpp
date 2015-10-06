@@ -158,7 +158,7 @@ string rev_comp_bin::run(string sequence)
     cout << sequence << endl;
 
     // Time measurement: beginning
-    int seconds1 = time(NULL);
+    //int seconds1 = time(NULL);
 
     // Convert string to bitset with encoding given by m_mappingADNData
     Convert f_convert(sequence.length());
@@ -170,7 +170,7 @@ string rev_comp_bin::run(string sequence)
     //cout << "Encoded sequence:  " << *encodedSequence        << endl;
 
     // Time measurement: encoding done
-    int seconds3 = time(NULL);
+    //int seconds3 = time(NULL);
 
     for (uint64_t i = 0; i < encodedSequence->size(); i += BIN_LENGTH) {
 
@@ -193,13 +193,14 @@ string rev_comp_bin::run(string sequence)
     }
 
     // Time measurement: reversing done
-    int seconds4 = time(NULL);
+    //int seconds4 = time(NULL);
 
     // Displays the new reversed & complementary sequence
     cout << sequence << endl;
 
-    cout << "Encoding done:   " << seconds3 - seconds1 << endl
+    /*cout << "Encoding done:   " << seconds3 - seconds1 << endl
          << "Reversing done:  " << seconds4 - seconds3 << endl;
+     */
 
     // Returns reversed sequence
     return sequence;

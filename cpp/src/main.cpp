@@ -39,6 +39,7 @@ int main(int argc, char** argv)
     bench_list.emplace("naive", std::make_unique<rev_comp_naive>());
     bench_list.emplace("pol3", std::make_unique<rev_comp_pol3>());
     bench_list.emplace("bin", std::make_unique<rev_comp_bin>());
+    bench_list.emplace("bin_2bits", std::make_unique<rev_comp_bin_2bits>());
 
     bench_list.emplace("tab_allocate", std::make_unique<rev_comp_tab_allocate>());
     bench_list.emplace("hash_allocate", std::make_unique<rev_comp_hash_allocate>());
