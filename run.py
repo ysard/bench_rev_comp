@@ -93,9 +93,7 @@ def run(bin_path, seq, gc, nb_call, nb_repeat):
 
         result_reader = csv.DictReader(result.stdout)
         for row in result_reader:
-            #print("keys:", row.keys())
             for algo in row.keys():
-                #print("seq:",seq, "gc:", gc, "algo:", algo, "row["+ algo +"]:", row[algo])
                 ret[str(len(seq))+"-"+str(gc)+"-"+algo].append(int(row[algo]))
 
     return ret
